@@ -1,7 +1,11 @@
 package JavaDataStructure;
 
 public class segmentTree {
-    public static SegmentTreeNode buildTree(int start, int end, int[] array) {
+    private SegmentTreeNode TreeRoot;
+    public segmentTree(int[] array){
+        this.TreeRoot = buildTree(0, array.length - 1, array);
+    }
+    private SegmentTreeNode buildTree(int start, int end, int[] array) {
         if (start == end) {
             return new SegmentTreeNode(start, end, array[start]);
 
@@ -11,9 +15,8 @@ public class segmentTree {
         SegmentTreeNode right = buildTree(mid + 1, end, array);
 
         return new SegmentTreeNode(start, end, left.sum + right.sum, left, right);
-
     }
-    public static void updateTree(SegmentTreeNode root, int index, int val) {
+    private void updateTree(SegmentTreeNode root, int index, int val) {
         if (root.start == root.end && root.start == index) {
             root.sum = val;
             return;
@@ -27,7 +30,7 @@ public class segmentTree {
         }
         root.sum = root.left.sum + root.right.sum;
     }
-    public static int querySum(SegmentTreeNode root, int start, int end) {
+    private int querySum(SegmentTreeNode root, int start, int end) {
         if (start == root.start && end == root.end) {
             return root.sum;
         }
@@ -43,11 +46,10 @@ public class segmentTree {
         }
     }
 
-    public static void main(String[] args) {
-        int[] array = {1,2,3,4,55,64,2,2};
-        SegmentTreeNode a = buildTree(0, array.length - 1, array);
-        updateTree(a, 3, 52);
-        System.out.println(querySum(a, 3, 5));
-
+    public void updateTree(int index, int val) {
+        updateTree(TreeRoot, index, val);
+    }
+    public int querySum(int start, int end) {
+        return querySum(TreeRoot, start, end);
     }
 }
