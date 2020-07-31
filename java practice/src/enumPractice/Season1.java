@@ -59,6 +59,12 @@ enum Status implements info {
         public void show() {
             System.out.println("I am fine");
         }
+    },
+    BAD(1, "isolation") {
+        @Override
+        public void show() {
+            System.out.println("I am doomed");
+        }
     };
     private final int Salary;
     private final String state;
